@@ -4,35 +4,32 @@
 #include <string.h>
 #include <ctype.h>
 
-int input(char *s, int length);
-int get_card_number(char *prompt);
+long get_card_number(char *prompt);
 
 int main(void) {
   long card_number;
 
-  card_number = get_card_number("Number: ");
-  if (card_number == -1)
-    printf("Bitch..., that ain't no credit card number!");
-  else
-    printf("Fuckin' A, hombre :)");
-
+  do
+  {
+    card_number = get_card_number("Number: ");
+  } while (card_number == -1);
+  
   return 0;
 }
 
-int get_card_number(char *prompt) {
-  char *buffer;
-  size_t bufsize = 16;
-  size_t characters;
+/*
+  Retrieve a card number from the user.
+  Ensure that the input received contains only digits.
+  Convert the input string to a long.
+  Return the long.
+*/
+long get_card_number(char *prompt) {
   long number;
-
-  buffer = (char *) malloc(bufsize * sizeof(char));
-  if (buffer == NULL) {
-    perror("Unable to allocate buffer.");
-    exit(1);
-  }
+  char *buffer;
 
   printf("%s", prompt);
-  characters = getline(&buffer, &bufsize, stdin);
+  buffer = (char *) malloc(17 * sizeof(char));
+  scanf("%s", buffer);
   
   for (int i = 0; i < strlen(buffer); i++) {
     if (!isdigit(buffer[i]))
@@ -40,5 +37,7 @@ int get_card_number(char *prompt) {
   }
 
   number = atol(buffer);
+
+  free(buffer);
   return number;
 }
