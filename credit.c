@@ -89,21 +89,22 @@ void determine_card_type(char text[]) {
     case 15 :
       if ((text[0] == 51) && (text[1] == 52 || text[1] == 55))
         printf("AMEX\n");
-      printf("INVALID\n");
+      else
+        printf("INVALID\n");
       break;
     case 13 :
       if (text[0] == 52)
         printf("VISA\n");
-      printf("INVALID\n");
+      else
+        printf("INVALID\n");
       break;
     case 16 :
       if (text[0] == 52)
         printf("VISA\n");
-      if ((text[0] == 53) && (text[1] == 49 || text[1] == 50 || text[1] == 51 ||
-                                               text[1] == 52 || text[1] == 53)) {
+      else if ((text[0] == 53) && (text[1] == 49 || text[1] == 50 || text[1] == 51 || text[1] == 52 || text[1] == 53))
         printf("MASTERCARD\n");
-      }
-      printf("INVALID\n");
+      else
+        printf("INVALID\n");
       break;
     default :
       printf("INVALID\n");
