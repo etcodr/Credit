@@ -1,29 +1,26 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 #include <string.h>
 #include <ctype.h>
 #include <stdbool.h>
 
-int get_card_number(char *prompt);
+int process_card_number(char *prompt);
 bool validate_card_number(char text[]);
+void determine_card_type(char text[]);
 
 int main(void) {
-  int card_number;
+  int sentinal;
 
   do
   {
-    card_number = get_card_number("Number: ");
-  } while (card_number != 0);
-  
- 
-  printf("card_number is %ld\n", card_number);
-  
+    sentinal = process_card_number("Number: ");
+  } while (sentinal != 0);
+    
   return 0;
 }
 
 // Implement Luhn's algorithm to validate the card number.
-int get_card_number(char *prompt) {
+int process_card_number(char *prompt) {
   char text[100];
   int number;
   int i;
@@ -40,11 +37,14 @@ int get_card_number(char *prompt) {
   }
 
   // Ensure that the input rec'd is a valid card number via Luhn's algorithm.
-  if (validate_card_number(text))
-  //   number = atol(text);
+  if (validate_card_number(text)) {
+    determine_card_type(text);
     return 0;
-  else
-    return 2;
+  }
+  else {
+    printf("INVALID\n");
+    return 0;
+  }
 }
 
 // Implement Luhn's algorithm in order to validate card numbers.
@@ -75,8 +75,34 @@ bool validate_card_number(char text[]) {
 
   sum_total = sum1 + sum2;
 
+  // Ensure that the last digit of sum_total is a zero.
   if (sum_total % 10 == 0)
     return true;
 
   return false;
+}
+
+// Determine which type of card the number represents.
+void determine_card_type(char text[]) {
+  int digits = strlen(text);
+  switch (digits) {
+    case 15 :
+      if ((text[0] == 51) && (text[1] == 52 || text[1] == 55))
+        printf("AMEX\n");
+      break;
+    case 13 :
+      if (text[0] == 52)
+        printf("VISA\n");
+      break;
+    case 16 :
+      if (text[0] == 52)
+        printf("VISA\n");
+      if ((text[0] == 53) && (text[1] == 49 || text[1] == 50 || text[1] == 51 ||
+                                               text[1] == 52 || text[1] == 53)) {
+        printf("MASTERCARD\n");
+      }
+      break;
+    default :
+      printf("INVALID\n");
+  }
 }
