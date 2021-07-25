@@ -19,7 +19,7 @@ int main(void) {
   return 0;
 }
 
-// Implement Luhn's algorithm to validate the card number.
+// Get number from user, process via validation and Luhn's algorithm.
 int process_card_number(char *prompt) {
   char text[100];
   int number;
