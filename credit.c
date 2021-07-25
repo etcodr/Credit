@@ -22,8 +22,7 @@ int main(void) {
 // Get number from user, process via validation and Luhn's algorithm.
 int process_card_number(char *prompt) {
   char text[100];
-  int number;
-  int i;
+  int number, i;
 
   // Retrieve a card number from the user.
   printf("%s", prompt);
@@ -84,7 +83,9 @@ bool validate_card_number(char text[]) {
 
 // Determine which type of card the number represents.
 void determine_card_type(char text[]) {
-  int digits = strlen(text);
+  int digits = strlen(text);    // Find the amount of digits in the number.
+
+  // Below, compare the first two digits (using ASCII values).
   switch (digits) {
     case 15 :
       if ((text[0] == 51) && (text[1] == 52 || text[1] == 55))
