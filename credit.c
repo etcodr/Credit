@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
 #include <stdbool.h>
@@ -22,7 +21,7 @@ int main(void) {
 // Get number from user, process via validation and Luhn's algorithm.
 int process_card_number(char *prompt) {
   char text[100];
-  int number, i;
+  int i;
 
   // Retrieve a card number from the user.
   printf("%s", prompt);
@@ -48,17 +47,17 @@ int process_card_number(char *prompt) {
 
 // Implement Luhn's algorithm in order to validate card numbers.
 bool validate_card_number(char text[]) {
-  int i, j, k, sum1 = 0, sum2 = 0, sum_total = 0, x = 0, size = strlen(text) / 2;
+  int i, j, k, sum1 = 0, sum2 = 0, sum_total, x = 0, size = (int) strlen(text) / 2;
   int temp[size];
 
-  for (i = strlen(text) - 2; i >= 0; i-= 2) {
+  for (i = (int) strlen(text) - 2; i >= 0; i-= 2) {
     // Times every other digit by 2, start with the number's 2nd to last digit.
     temp[x] = (text[i] - '0') * 2;   // Then add it to temp array.
     x++;
   }
 
   // Add the other digits to the temp2 array.
-  for (j = strlen(text) -1; j >= 0; j-= 2)
+  for (j = (int) strlen(text) -1; j >= 0; j-= 2)
     sum2 += text[j] - '0';
   
   // Add the products of temp's digits together.
@@ -83,7 +82,7 @@ bool validate_card_number(char text[]) {
 
 // Determine which type of card the number represents.
 void determine_card_type(char text[]) {
-  int digits = strlen(text);    // Find the amount of digits in the number.
+  int digits = (int) strlen(text);    // Find the amount of digits in the number.
 
   // Below, compare the first two digits (using ASCII values).
   switch (digits) {
